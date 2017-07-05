@@ -1,23 +1,29 @@
 <?php
 
-error_log(print_r($_SERVER, true));
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['REQUEST_URI'] == '/token') {
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    error_log("code: {$_REQUEST['code']}")
+    error_log("grant_type: {$_REQUEST['grant_type']}")
+    error_log("client_id: {$_REQUEST['client_id']}")
+    
+    $response = [];
+    $response["access_token"] = "accessxyz";
+    $response["refresh_token"] = "refreshxyz";
+    $response["expires_in"] = 900;
+    $response["scope"] = "email";
+    $response["token_type"] = "Bearer";
+    header('Content-Type: application/json');
+    echo json_encode($response);
 
-	$state = $_REQUEST['state'];
-	$redirect = $_REQUEST['redirect_uri'];
-	$code = 'xyz';
-	
-	header( "Location: {$redirect}?code={$code}&state={$state}" ) ;
-	exit;
+} else if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['REQUEST_URI'] == '/login') {
+
+    $state = $_REQUEST['state'];
+    $redirect = $_REQUEST['redirect_uri'];
+    $code = 'authxyz';
+    header("Location: {$redirect}?code={$code}&state={$state}");
+
+} else if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['REQUEST_URI'] == '/ppd') {
+    include('ppd.php');
+} else {
+    include('login.php');
 }
-
-?><html>
-<body>
-	<form method="post" action="/">
-		<input type="hidden" name="state" value="<?php echo $_REQUEST['state'] ?>" />
-		<input type="hidden" name="redirect_uri" value="<?php echo $_REQUEST['redirect_uri'] ?>" />
-		<input type="submit" />
-	</form>
-</body>
-</html>
