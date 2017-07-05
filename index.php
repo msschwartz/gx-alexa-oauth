@@ -2,9 +2,9 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['REQUEST_URI'] == '/token') {
 
-    error_log("code: {$_REQUEST['code']}")
-    error_log("grant_type: {$_REQUEST['grant_type']}")
-    error_log("client_id: {$_REQUEST['client_id']}")
+    error_log("code: {$_REQUEST['code']}");
+    error_log("grant_type: {$_REQUEST['grant_type']}");
+    error_log("client_id: {$_REQUEST['client_id']}");
     
     $response = [];
     $response["access_token"] = "accessxyz";
